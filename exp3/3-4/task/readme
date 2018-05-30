@@ -1,0 +1,18 @@
+gcc sender.c -o sender -lpthread
+gcc receiver.c -o receiver -lpthread
+message-form:(1025B)
+    Sender:1B
+    Status:2B  (未实现)
+    Data:1KB
+
+Sender:
+    SENDER 1
+    RECEIVER 0
+
+Status:
+    Sender:
+        alive 1
+        exit 0
+    Receiver:
+        alive 1
+        exit 0
