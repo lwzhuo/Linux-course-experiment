@@ -34,7 +34,7 @@ int main()
         full = sem_open("/full",O_RDWR);
         empty = sem_open("/empty",O_RDWR);
         if(mutex==SEM_FAILED||full==SEM_FAILED||empty==SEM_FAILED)
-            printf("sem_open error,retry\n");
+            printf("sem_open error\n");
     }
     msg_smd = shmget(msg_key,MSG_MEM_SIZE,IPC_CREAT|S_IRUSR|S_IWUSR);
     if(msg_smd<0){

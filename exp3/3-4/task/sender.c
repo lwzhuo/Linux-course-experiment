@@ -29,10 +29,11 @@ int main()
     full = sem_open("/full",O_CREAT|O_EXCL,S_IRUSR|S_IWUSR,0);
     empty = sem_open("/empty",O_CREAT|O_EXCL,S_IRUSR|S_IWUSR,1);
     if(mutex==SEM_FAILED||full==SEM_FAILED||empty==SEM_FAILED){
-        printf("sem_open error,retry\n");
         mutex = sem_open("/mutex",O_RDWR);
         full = sem_open("/full",O_RDWR);
         empty = sem_open("/empty",O_RDWR);
+        if(mutex==SEM_FAILED||full==SEM_FAILED||empty==SEM_FAILED)
+            printf("sem_open error\n");
     }
 //创建共享存储段 消息数据
     msg_smd = shmget(msg_key,MSG_MEM_SIZE,IPC_CREAT|S_IRUSR|S_IWUSR);
@@ -54,7 +55,7 @@ int main()
         if(*data != INIT)//判断共享数据段是否为初始状态
             printf("message from receiver %s\n",data+1);
         printf("Sender input:");
-        scanf("%s",buff);
+        gets(buff);
         if(!strcmp(buff,"exit")){//处理退出的收尾工作
             printf("exit!\n");
             *data=SENDER_EXIT;
