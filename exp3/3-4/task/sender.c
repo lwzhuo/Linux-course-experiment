@@ -54,10 +54,10 @@ int main()
         sem_wait(mutex);
         if(*data != INIT)//判断共享数据段是否为初始状态
             printf("message from receiver %s\n",data+1);
-        printf("Sender input:");
+        printf("\033[36m\033[01mSender input:\033[0m");
         gets(buff);
         if(!strcmp(buff,"exit")){//处理退出的收尾工作
-            printf("exit!\n");
+            printf("\033[31m\033[01mexit!\033[0m\n");
             *data=SENDER_EXIT;
             sem_post(mutex);
             sem_post(receiver_response);

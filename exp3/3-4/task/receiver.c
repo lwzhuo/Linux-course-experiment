@@ -51,6 +51,7 @@ int main()
         sem_wait(receiver_response);
         sem_wait(mutex);
         if(*data==SENDER_EXIT){
+            printf("\033[31m\033[01msender exit\033[0m\n");
             //sender退出处理
             sem_post(mutex);
             sem_post(sender_write);
@@ -58,7 +59,7 @@ int main()
         }
         if(*data != INIT){//判断共享数据段是否为初始状态
             if(*data == SENDER){
-                printf("message from sender %s\n",data+1);
+                printf("\033[36m\033[01mmessage from sender\033[0m: %s\n",data+1);
                 strcpy(data+1,"over");
                 *data = RECEIVER;
             } 
