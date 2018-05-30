@@ -14,8 +14,8 @@ int main()
 {
 //3个信号量
     sem_t *mutex;//共享存储临界资源(1)
-    sem_t *full;//满(0)
-    sem_t *empty;//空(1)
+    sem_t *receiver_response;//接受者响应(0)
+    sem_t *sender_write;//发送者写(1)
     char *data;
     key_t msg_key;
     int msg_smd;
@@ -26,13 +26,13 @@ int main()
     }
 //信号量创建并初始化
     mutex = sem_open("/mutex",O_CREAT|O_EXCL,S_IRUSR|S_IWUSR,1);
-    full = sem_open("/full",O_CREAT|O_EXCL,S_IRUSR|S_IWUSR,0);
-    empty = sem_open("/empty",O_CREAT|O_EXCL,S_IRUSR|S_IWUSR,1);
-    if(mutex==SEM_FAILED||full==SEM_FAILED||empty==SEM_FAILED){
+    receiver_response = sem_open("/receiver_response",O_CREAT|O_EXCL,S_IRUSR|S_IWUSR,0);
+    sender_write = sem_open("/sender_write",O_CREAT|O_EXCL,S_IRUSR|S_IWUSR,1);
+    if(mutex==SEM_FAILED||receiver_response==SEM_FAILED||sender_write==SEM_FAILED){
         mutex = sem_open("/mutex",O_RDWR);
-        full = sem_open("/full",O_RDWR);
-        empty = sem_open("/empty",O_RDWR);
-        if(mutex==SEM_FAILED||full==SEM_FAILED||empty==SEM_FAILED)
+        receiver_response = sem_open("/receiver_response",O_RDWR);
+        sender_write = sem_open("/sender_write",O_RDWR);
+        if(mutex==SEM_FAILED||receiver_response==SEM_FAILED||sender_write==SEM_FAILED)
             printf("sem_open error\n");
     }
 //创建共享存储段 消息数据
@@ -50,7 +50,7 @@ int main()
     printf("input 'exit' to exit\n");
     while(1){
         char buff[100];
-        sem_wait(empty);
+        sem_wait(sender_write);
         sem_wait(mutex);
         if(*data != INIT)//判断共享数据段是否为初始状态
             printf("message from receiver %s\n",data+1);
@@ -60,18 +60,18 @@ int main()
             printf("exit!\n");
             *data=SENDER_EXIT;
             sem_post(mutex);
-            sem_post(full);
+            sem_post(receiver_response);
             break;
         }
         *data = SENDER;//标识消息发送对象
         strcpy(data+1,buff);
         sem_post(mutex);
-        sem_post(full);
+        sem_post(receiver_response);
     }
 //解除信号量引用
     sem_unlink("/mutex");
-    sem_unlink("/full");
-    sem_unlink("/empty");
+    sem_unlink("/receiver_response");
+    sem_unlink("/sender_write");
 //分离并删除共享存储区
     shmdt(data);
     shmctl(msg_smd,IPC_RMID,0);
