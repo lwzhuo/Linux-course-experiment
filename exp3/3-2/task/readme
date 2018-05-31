@@ -1,1 +1,0 @@
-gcc task.c func.h func.c -o task -lpthread
