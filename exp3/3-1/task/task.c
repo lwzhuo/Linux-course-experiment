@@ -68,7 +68,7 @@ int main()
                 if((pid=fork())<0)
                     printf("fork error\n");
                 else if(pid==0){
-                    if(execv(ins,args)<0){
+                    if(execv(ins,args)<0){//execvp 继承父进程环境变量
                         if(errno==2)//处理command not found情况(No such file or directory)
                             printf("%s: Command not found\n",ins);
                         else
