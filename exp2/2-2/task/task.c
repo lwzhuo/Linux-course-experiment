@@ -61,11 +61,14 @@ static int task_init(void)
 		    show(s);
 		}
 		printk("sibling\n");
+		//两种方式遍历
+		//以下是第一种
 		// list_for_each(lh,&parent->children){
 		//     s = list_entry(lh,struct task_struct,sibling);
 		// 	if(s->pid!=pid)
 		//     	show(s);
 		// }
+		//以下是第二种
 		list_for_each_entry(s,&parent->children,sibling){
 			show(s);
 		}
