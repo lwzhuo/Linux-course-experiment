@@ -21,7 +21,7 @@ static int task_init(void)
     struct task_struct *task;
     printk("%-7s%-20s%-20s%-5s%-5s\n","pid","name","state","prio","parrent_pid");
     for_each_process(task){
-        if(task->mm!=NULL)
+        if(task->mm==NULL)
             printk("%-7d%-20s%-20s%-5d%-5d\n",task->pid,task->comm,task_state_array[task_state_index(task)],task->prio,task->real_parent->pid);
     }
     return 0;
