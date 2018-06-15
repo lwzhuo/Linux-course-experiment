@@ -1,3 +1,2 @@
-一键脚本
 sudo ./mod.sh task.ko
-
+dmesg
