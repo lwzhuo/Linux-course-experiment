@@ -8,7 +8,6 @@
 #define SEM_MEM_SIZE 64   //信号量存储大小16B
 #define SENDER '1'
 #define RECEIVER '0'
-#define INIT '2'
 #define SENDER_EXIT '3'
 int main()
 {
@@ -52,18 +51,18 @@ int main()
         sem_wait(mutex);
         if(*data==SENDER_EXIT){
             printf("\033[31m\033[01msender exit\033[0m\n");
+            strcpy(data+1,"over");
+            *data = RECEIVER;
             //sender退出处理
             sem_post(mutex);
             sem_post(sender_write);
             break;
         }
-        if(*data != INIT){//判断共享数据段是否为初始状态
-            if(*data == SENDER){
-                printf("\033[36m\033[01mmessage from sender\033[0m: %s\n",data+1);
-                strcpy(data+1,"over");
-                *data = RECEIVER;
-            } 
-        }
+        if(*data == SENDER){
+            printf("\033[36m\033[01mmessage from sender\033[0m: %s\n",data+1);
+            strcpy(data+1,"over");
+            *data = RECEIVER;
+        } 
         sem_post(mutex);
         sem_post(sender_write);
     }

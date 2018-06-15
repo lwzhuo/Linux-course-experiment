@@ -8,7 +8,6 @@
 #define SEM_MEM_SIZE 64   //信号量存储大小16B
 #define SENDER '1'
 #define RECEIVER '0'
-#define INIT '2'
 #define SENDER_EXIT '3'
 int main()
 {
@@ -46,19 +45,17 @@ int main()
         printf("shmat error\n");
         return 0;
     }
-    *data = INIT;//初始化发送标识段
     printf("input 'exit' to exit\n");
     while(1){
         char buff[100];
         sem_wait(sender_write);
         sem_wait(mutex);
-        if(*data != INIT)//判断共享数据段是否为初始状态
-            printf("message from receiver %s\n",data+1);
         printf("\033[36m\033[01mSender input:\033[0m");
         gets(buff);
         if(!strcmp(buff,"exit")){//处理退出的收尾工作
-            printf("\033[31m\033[01mexit!\033[0m\n");
             *data=SENDER_EXIT;
+            printf("message from receiver %s\n",data+1);
+            printf("\033[31m\033[01mexit!\033[0m\n");
             sem_post(mutex);
             sem_post(receiver_response);
             break;
