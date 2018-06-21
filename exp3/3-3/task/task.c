@@ -2,6 +2,8 @@
 #include<pthread.h>
 #include<semaphore.h>
 #include<sys/ipc.h>
+#include<sys/msg.h>
+#include<unistd.h>
 #include<string.h>
 #define MSG_SIZE 512
 //全局变量

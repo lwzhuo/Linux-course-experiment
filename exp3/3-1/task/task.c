@@ -22,15 +22,7 @@ void print_head()
     fgets(pathname,sizeof(pathname),fp);
 
     printf("\033[32m\033[01m%s@%s:%s$ \033[0m",loginname,hostname,pathname);
-}
-
-char *getpwd()
-{
-    FILE *fp;
-    char pathname[100];
-    fp = popen("echo -n `pwd`","r");
-    fgets(pathname,sizeof(pathname),fp);
-    return pathname;
+    fclose(fp);
 }
 
 int main()

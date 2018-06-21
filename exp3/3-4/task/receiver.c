@@ -4,6 +4,7 @@
 #include<sys/shm.h>
 #include<string.h>
 #include<fcntl.h>
+#include<unistd.h>
 #define MSG_MEM_SIZE 1024 //消息数据存储大小1k
 #define SEM_MEM_SIZE 64   //信号量存储大小16B
 #define SENDER '1'
@@ -46,7 +47,6 @@ int main()
         return 0;
     }
     while(1){
-        char buff[100];
         sem_wait(receiver_response);
         sem_wait(mutex);
         if(*data==SENDER_EXIT){

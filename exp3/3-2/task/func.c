@@ -5,11 +5,8 @@
 #define NUM 512
 int write1(int fd)
 {
-    int sum=0,n;
-    char buff[BUFF_SIZE]="12345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678123456781234567812345678";//128B  
-    for(int i=0;i<NUM-1;i++)//128*128B=16384
-        sum += (write(fd,buff,strlen(buff)));
-    return sum;
+    char buff[BUFF_SIZE]="this is p1\n";
+    return write(fd,buff,strlen(buff));
 }
 int write2(int fd)
 {

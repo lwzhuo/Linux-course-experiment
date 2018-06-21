@@ -18,6 +18,7 @@ int main()
     char *data;
     key_t msg_key;
     int msg_smd;
+    char buff[100];
     msg_key = ftok("./sender.c",10);//生成消息数据的key
     if(msg_key<0){
         printf("ftok error\n");
@@ -47,7 +48,6 @@ int main()
     }
     printf("input 'exit' to exit\n");
     while(1){
-        char buff[100];
         sem_wait(sender_write);
         sem_wait(mutex);
         printf("\033[36m\033[01mSender input:\033[0m");

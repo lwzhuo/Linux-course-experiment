@@ -21,18 +21,6 @@ int main()
     if(pipe(fd)<0)//创建管道
         printf("pipe error\n");
 
-    // smd = shmget(IPC_PRIVATE,MEM_SIZE,IPC_CREAT|S_IRUSR|S_IWUSR);//获取共享存储标识符
-    // if(smd<0){
-    //     printf("shmget error\n");
-    //     return -1;
-    // }
-
-    // ptr = (sem_t **)shmat(smd,0,0);//获得共享存储指针 smd-标识符 0-内核选择第一个可用的地址 0-读写方式访问 
-    // if(ptr<0){
-    //     printf("shamt error\n");
-    //     return 0;
-    // }
-
     pi = sem_open("/P",O_CREAT|O_EXCL,S_IRUSR|S_IWUSR,1);//创建新的信号量 初始值1
     if(pi==SEM_FAILED){
         printf("sem_open error\n");
