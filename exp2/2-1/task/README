@@ -1,2 +1,5 @@
-sudo ./mod.sh task.ko
-dmesg
+使用方法:
+1.运行脚本，构建加载卸载一条龙
+    sudo ./mod.sh task.ko
+2.显示输出信息
+    dmesg

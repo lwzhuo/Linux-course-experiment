@@ -1,0 +1,10 @@
+使用方法:
+1.构建
+    make
+2.使用ps等命令选择一个正在运行的程序的pid
+3.加载模块，执行:(xxx填入刚刚选择的pid)
+    sudo insmod task.ko pid=xxxx
+4.显示输出信息
+    dmesg
+5.卸载模块
+    sudo rmmod task

@@ -1,0 +1,13 @@
+实现一个管道通信程序
+
+func.c是包含三个子进程运行的函数
+task.c是管道通信程序
+testsize.c是管道大小测试程序
+
+使用方式:
+构建:
+    通信程序:
+    gcc task.c func.h func.c -o task -lpthread
+    管道大小测试程序:
+    gcc testsize.c -o testsize
+    

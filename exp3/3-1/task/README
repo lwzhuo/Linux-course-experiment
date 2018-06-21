@@ -1,0 +1,35 @@
+实现一个模拟shell
+
+cmd1、cmd2、cmd3分别是三个C程序
+task.c是模拟shell程序
+设计的三个程序模拟shell命令运行几种情况(命令行传参、等待用户输入、直接打印)
+    cmd1是一个计算阶乘的程序，通过命令行传参计算打印结果
+    cmd2直接输出hello world
+    cmd3需要执行后等待用户输入，然后继续执行
+也可将这几个程序替换成自己写的C程序
+
+构建:
+    三个命令:
+    gcc cmd1.c -o cmd1
+    gcc cmd2.c -o cmd2
+    gcc cmd3.c -o cmd3
+
+    shell程序:
+    gcc task.c -o task
+
+运行:
+    ./task
+
+测试三个命令:
+    cmd1
+        cmd1 数字
+    cmd2
+        可以看见hello world输出
+    cmd3
+        等待用户输入自己的名字，然后问候
+
+退出程序命令:
+    exit
+
+注:execv函数可以改用成excvp函数，这样就可以直接将父进程中的环境变量直接复制进来，可以用上很多linux shell(ls rm等)的命令。
+    
